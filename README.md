@@ -1,5 +1,5 @@
 # OffScale-Form-Builder-Spring-Hack
-Spring Hack 
+“The main thing I'm trying to show here is a simple, responsive, web-based interface that allows you to extend applications, by writing your own workflow (form wizard), schema (SQL), and routes (OpenAPI).” Samuel Marks, CTO
 
 
 # Structure
