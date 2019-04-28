@@ -22,6 +22,8 @@ We present the project Startblock - web application without a server (client sid
 
 We solved the following problem - **creating a web application without a server, consisting of 3 parts: SQL designer, OpenApi designer, Form Builder**
 
+Video demonstration of our prototype: https://youtu.be/9YR9obWRUjM
+
 # Solution
 
 Our solution is the implementation of a web application that allows you to create forms. The interaction of customers of our service is carried out through a web application.
@@ -41,6 +43,8 @@ Script Option:
      - call generateSQL (a_form_json), instead of a_form_json, we pass get_from_local_storage (<FORMNAME>) - our saved json
 4. Save the resulting sql code in localstorage (again, call save_at_local_storage (a_key, a_text), only the key is different already)
 5. Then we can pull out both json and sql, we can delete some by key (remove_key_from_local_storage (a_key)), or delete everything altogether by cleaning local storage (clear_local_storage ())
+  
+ Video demonstration of our prototype: https://youtu.be/9YR9obWRUjM
 
 Next we look at the technical implementation of our project.
 
@@ -52,7 +56,12 @@ When you start the site, you will see the following interface:
 
 A detailed description of how to run this solution can be found here. - <a href="#installation">“Installation”</a> section.
 
-Описание фронта !!!
+In the form creator, we will be able to construct a form and fill it with data.
+We can create cards and fill it with the necessary elements.
+All data and form information is converted to a JSON file.
+After that, JSON is converted and creates a SQL table with the necessary data in the correct format.
+In the future we plan to add the conversion to the YAML file and transfer to the open API designer.
+Subsequently, these files are transferred and stored locally and can be used by services.
 
 # Installation
 # SetquestRx
@@ -81,27 +90,28 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 # Finally
 
+Video demonstration of our prototype: https://youtu.be/9YR9obWRUjM 
+
 During the hackathon:
 ОПИСАНИЕ ЗАДАЧ!
-- Мы реализовали веб приложение, позволяющее создавать заявку на покупку и продажу
-- Создали смарт-контракт, который позволяет нам регулировать взаимоотношение между клиентами нашего сервиса
-- Создали сервер, который общается с веб приложением и блокчейном
-- Создали базу данных, которая позволяет нам в автоматическом режиме искать совпадения между заявками и создавать стакан заявок
+- Connect open API with SQL designer
+- We created a frontend in the form of a form builder, in which you can create various elements and convert them to JSON
+- We created a SQL designer that is changed using the database and incoming JSON files.
+- Created a local repository for storing Json, SQL schemas, YAML files
 
 Solved problems:
-ОПИСАНИЕ ПРОБЛЕМ!
-- Проблема децентрализованной биржы, когда заявку можно отменить после мэтчинга, "добавив газу"
-- Проблема нечестного мэтчинга при централизованном сервере
+- Connect open API with SQL designer
+- Get rid of local data storage
 
 Refinement options:
-ОПИСАНИЕ ДАЛЬНЕШЕЙ РАБОТЫ!
-- Добавление zero-knowledge proof для скрытия цены/объема в запросах пользователей
+- We will create a connection of our system with open api and the publication of the created files on this system. This will be a complete, complete product and a great improvement to our existing MVP.
 
 # Team
 
 - Ivan Fedorov - fedorov@yandex.ru, was engaged in a database, presentation
 - Kanzeparov Ruslan - kanzeparov@yandex.ru, was engaged in the presentation and database
-- Dmitry Malakhov - pecherkin@yandex.ru, was engaged in the front
+- Dmitry Malakhov - malakhov@yandex.ru, was engaged in the front
+- Anton Pecherkin - aa.pecherkin@yandex.ru, was engaged in the presentation
 
 
 
