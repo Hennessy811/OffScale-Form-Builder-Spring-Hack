@@ -16,11 +16,11 @@ Spring Hack
 </ol>
 
 # About
-We are the ** IBI SOLUTION ** team and we solved the task of ** creating tools for designing and creating web applications with an intuitive drag-and-drop interface **.
+We are the **IBI SOLUTION** team and we solved the task of **creating tools for designing and creating web applications with an intuitive drag-and-drop interface**.
 
 We present the project Startblock - web application without a server (client side)
 
-We solved the following problem - ** creating a web application without a server, consisting of 3 parts: SQL designer, OpenApi designer, Form Builder **
+We solved the following problem - **creating a web application without a server, consisting of 3 parts: SQL designer, OpenApi designer, Form Builder**
 
 # Solution
 
