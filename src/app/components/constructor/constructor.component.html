@@ -1,0 +1,142 @@
+<mat-drawer-container class="page-container" autosize>
+  <mat-drawer class="sidenav" position="end" mode="side">
+    <h2>Settings</h2>
+    <div class="sidenav_option">
+      <div class="background-setup">
+        <h3>Background</h3>
+        <div class="background-setup_options">
+          <div
+            class="background-setup_options__item"
+            (click)="setBackground(image)"
+            *ngFor="let image of backgroundSource">
+            <img [src]="image" matTooltip="Change background">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="sidenav_option">
+      <div class="general-setup">
+        <h3>General</h3>
+        <div class="general-setup">
+          <form class="general-setup_form" [formGroup]="contestForm">
+            <mat-form-field class="general-setup_form__item">
+              <input matInput
+                     (change)="formUpdater()"
+                     placeholder="Form Title"
+                     formControlName="title">
+            </mat-form-field>
+
+            <mat-form-field class="general-setup_form__item">
+              <textarea matInput
+                        (change)="formUpdater()"
+                        placeholder="Form description"
+                        formControlName="description"></textarea>
+            </mat-form-field>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="sidenav_option">
+      <div class="socials-setup">
+        <h3>Form elements</h3>
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let social of ($socials | async)" [formGroup]="socialsGroup">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="socials_title">
+<!--                <img class="socials_logo" [src]="social.logo">-->
+                <span class="socials_title">{{ social.title }}</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-form-field *ngIf="social.actionTypes.length" class="socials-setup_select">
+              <mat-label>Form element type</mat-label>
+              <mat-select (selectionChange)="setTask(social.value, $event.value)" [formControlName]="'s' + social.value">
+                <mat-option
+                  class="socials-setup_select__option">
+                  None
+                </mat-option>
+                <mat-option
+                  class="socials-setup_select__option"
+                  *ngFor="let action of social.actionTypes" value="{{action}}">
+                  {{action | titlecase}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="!social.actionTypes.length">
+              <input matInput placeholder="Description" [formControlName]="'s' + social.value">
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput placeholder="Link" [formControlName]="social.value">
+            </mat-form-field>
+
+            <button class="socials_add"
+                    mat-flat-button color="accent"
+                    (click)="addOption(social)">
+              <mat-icon>add</mat-icon>
+              Add</button>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="sidenav_option">
+      <button mat-stroked-button color="primary" (click)="createContest()">Create form</button>
+    </div>
+  </mat-drawer>
+
+  <main class="sidenav-content" [ngStyle]="{'background-image': 'url(' + ($activeBackground | async)  + ')'}">
+    <div class="constructor-control-container">
+      <button type="button" matTooltip="{{ !editMode ? 'Edit form' : 'Hide' }}" mat-raised-button (click)="toggleEditor()">
+        <mat-icon *ngIf="!editMode">create</mat-icon>
+        <mat-icon *ngIf="editMode">clear</mat-icon>
+      </button>
+    </div>
+
+    <div class="contest-card-container">
+      <mat-card class="contest-card">
+        <div class="pics_container">
+          <img [src]="($user | async)?.info.banner" alt="" class="contest_banner">
+          <img [src]="($user | async)?.info.profile_picture" alt="" class="user_picture">
+        </div>
+        <mat-card-header>
+          <mat-card-title>
+            {{ ($contestTitle | async)?.title }}
+          </mat-card-title>
+          <mat-card-subtitle>
+            {{ ($contestTitle | async)?.description }}
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <ng-container>
+            <div class="tasks-list">
+              <mat-card class="tasks-list_item" *ngFor="let task of ($activeSocials | async)">
+<!--                    <img [src]="task.type.logo" class="task-social_logo">-->
+                    <button mat-raised-button matTooltip="{{task.type.actionTypes.length === 2 ? 'Submit' : task.action}}" color="warn" (click)="goTo(task.URL)">{{ task.type.actionTypes.length === 2 ? task.action : 'Go to' | titlecase }}</button>
+                    <button mat-flat-button color="primary" (click)="removeTask(task.id)"><mat-icon>delete</mat-icon></button>
+              </mat-card>
+            </div>
+          </ng-container>
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-card-actions class="contest-card_actions">
+          <button matTooltip="Will be available after form creation" type="button" color="primary" mat-raised-button>
+            <mat-icon>check</mat-icon>
+            Submit
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </main>
+
+</mat-drawer-container>
