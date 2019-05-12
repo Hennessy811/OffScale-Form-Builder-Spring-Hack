@@ -1,17 +1,63 @@
 function generateSQL (a_form_json) {
-      var l_sql_code;
+	  var a_form_json = '{"database" : "MySQL", \
+	                      "tablename" : "testtable", \
+	                      "fields" : [{"name": "id", "type" : "integer", "autoinc" : 1, "nullable" : 0}, \
+						              {"name": "name", "type" : "varchar(128)", "autoinc" : 0, "nullable" : 0}, \
+									  {"name": "mail", "type": "varchar(128)", "autoinc" : 0, "nullable" : 1}, \
+									  {"name" : "password", "type" : "varchar(128)", "autoinc" : 0, "nullable" : 1}], \
+						  "primary_key" : "id",\
+						  "foreign_keys" : [{"name" : "mail", "references": "mails(mail)"}]}'; 
       var l_form_json = JSON.parse(a_form_json);
-	  sql_code = "CREATE TABLE " + l_form_json.dbname + "(\n ";
-      for (var key in l_form_json.input ) {
-       if (l_form_json.input.hasOwnProperty(key)) {
-        sql_code = sql_code + l_form_json.input[key].name + " varchar(256),\n ";
+	  sql_code = "CREATE TABLE " + l_form_json.tablename + "(\n ";
+      for (var key in l_form_json.fields ) {
+       if (l_form_json.fields.hasOwnProperty(key)) {
+        sql_code = sql_code + l_form_json.fields[key].name + " " + l_form_json.fields[key].type;
+		if (l_form_json.fields[key].autoinc == 1) {
+		  sql_code = sql_code + " AUTOINCREMENT";
+		}
+		if (l_form_json.fields[key].nullable == 0) {
+		  sql_code = sql_code + " NOT NULL";
+		}
+		sql_code = sql_code + ",\n ";
        }
       }
-	  sql_code = sql_code + "id integer PRIMARY KEY\n);"
-	  //alert(sql_code);
+	  sql_code = sql_code + "PRIMARY KEY (" + l_form_json.primary_key + ")\n);\n" 
+	  for (var key in l_form_json.foreign_keys) {
+	    sql_code = sql_code + "ALTER TABLE " + l_form_json.tablename + "\n" + "ADD FOREIGN KEY (" + l_form_json.foreign_keys[key].name + ") REFERENCES " + l_form_json.foreign_keys[key].references + ";\n";
+	  }
+	  
+	  sql_code = sql_code + "SELECT * from " + l_form_json.tablename + ";\n";
+	  sql_code = sql_code + "INSERT INTO " + l_form_json.tablename + "(";
+	  for (var key in l_form_json.fields ) {
+       if (l_form_json.fields.hasOwnProperty(key)) {
+        sql_code = sql_code + l_form_json.fields[key].name + ", ";
+       }
+      }
+	  sql_code = sql_code.slice(0, -2) + ")\nVALUES();\n";
+	  alert(sql_code);
       return sql_code; 
     }
 	
+	function generateJSON (a_form_sql) {
+	  var a_form_sql = 'CREATE TABLE test ( id integer, name varchar(32), birth date, PRIMARY KEY (id) )'; 
+      var l_form_sql = a_form_sql.split(' ');
+	  l_json = '{"database" : "MySQL", "tablename" : "' + l_form_sql[2] + '", "fields" : [';
+	  for (var i = 4; i < l_form_sql.length; i++) {
+	    if (l_form_sql[i] != 'PRIMARY') {
+	      l_json = l_json + '{"name" : "' + l_form_sql[i] + '", "type" : "';
+		  i++;
+		  l_json = l_json + l_form_sql[i].slice(0, -1) + '"},';
+        } else {
+		  l_json = l_json.slice(0, -1) + '], "primary_key" : "';
+		  i++;
+		  i++;
+		  l_json = l_json + l_form_sql[i].slice(1, -1) + '"}';
+		  i = l_form_sql.length;
+		}   
+	  }
+	  alert(l_json);
+      return l_json;
+    }
 
 	
 	function generateYAML (a_form_json) {
