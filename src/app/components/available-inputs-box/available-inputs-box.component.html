@@ -1,0 +1,61 @@
+<mat-form-field>
+  <mat-select [placeholder]="'Select input type'" [(value)]="select">
+    <mat-option [value]="'select'">
+      Select
+    </mat-option>
+    <mat-option [value]="'text'">
+      Text Input
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div class="config" [ngSwitch]="select">
+  <div class="text-case" *ngSwitchCase="'text'">
+    <mat-slide-toggle [(ngModel)]="textFieldInfo.required">Required</mat-slide-toggle>
+
+    <mat-form-field>
+      <mat-select [placeholder]="'Type'" [(value)]="textFieldInfo.type">
+        <mat-option *ngFor="let option of textTypes" [value]="option">{{option | titlecase}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [placeholder]="'Input label'" [(ngModel)]="textFieldInfo.label">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [placeholder]="'Input key'" [(ngModel)]="textFieldInfo.key">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [placeholder]="'Input initial value'" [(ngModel)]="textFieldInfo.value">
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" (click)="addTextField()">Add Field</button>
+  </div>
+  <div class="select-case" *ngSwitchCase="'select'">
+    <mat-slide-toggle [(ngModel)]="selectFieldInfo.required">Required</mat-slide-toggle>
+
+    <mat-form-field>
+      <input matInput [placeholder]="'Select label'" [(ngModel)]="selectFieldInfo.label">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [placeholder]="'Select key'" [(ngModel)]="selectFieldInfo.key">
+    </mat-form-field>
+
+    <mat-form-field class="new-option">
+      <input matInput [placeholder]="'New option'" [(ngModel)]="selectNewOption">
+    </mat-form-field>
+
+    <button mat-stroked-button color="accent" (click)="addOption()">Add</button>
+
+    <div class="options-list">
+      <mat-list>
+        <mat-list-item *ngFor="let option of selectFieldInfo.options">{{option.value}}</mat-list-item>
+      </mat-list>
+    </div>
+
+    <button mat-flat-button color="primary" (click)="addSelectField()">Add Field</button>
+  </div>
+</div>

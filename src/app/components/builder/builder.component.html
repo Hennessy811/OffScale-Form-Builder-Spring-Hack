@@ -1,0 +1,22 @@
+<header>
+  <mat-toolbar color="primary">Form Constructor</mat-toolbar>
+</header>
+<main>
+  <mat-card class="constructor-card">
+    <mat-card-title>Form Preview Mode</mat-card-title>
+    <mat-card-content>
+      <app-dynamic-form [questions]="questions"
+                        (imported)="onImport($event)"
+                        (remove)="remove($event)"></app-dynamic-form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="availble-inputs-card">
+    <mat-card-title>Available Inputs</mat-card-title>
+    <mat-card-content>
+      <app-available-inputs-box
+        (addSelect)="addSelect($event)"
+        (addText)="addText($event)"></app-available-inputs-box>
+    </mat-card-content>
+  </mat-card>
+</main>

@@ -1,0 +1,17 @@
+<div>
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let question of questions" cdkDrag>
+        <app-question [question]="question" [form]="form" (remove)="remove.emit($event)"></app-question>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <button mat-raised-button color="warn" (click)="generateDownloadJsonUri()">
+        <a class="exporter" title="Download JSON" [href]="downloadJsonHref" download="formBuilder_export.json">Export as JSON</a>
+      </button>
+      <input type="file" (change)="onImport($event)"/>
+    </div>
+  </form>
+</div>

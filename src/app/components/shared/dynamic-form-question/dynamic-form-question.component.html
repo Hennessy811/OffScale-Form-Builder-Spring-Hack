@@ -1,0 +1,17 @@
+<div [formGroup]="form">
+<!--  <mat-label [attr.for]="question.key">{{question.label}}</mat-label>-->
+
+  <div [ngSwitch]="question.controlType">
+    <mat-form-field class="form-field-full-width">
+      <input matInput *ngSwitchCase="'textbox'" [placeholder]="question.label" [required]="question.required" [formControlName]="question.key"
+             [id]="question.key" [type]="question.type">
+
+      <mat-select [placeholder]="question.label" [id]="question.key" *ngSwitchCase="'dropdown'" [required]="question.required" [formControlName]="question.key">
+        <mat-option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-flat-button color="warn" (click)="remove.emit(question.key)"><mat-icon>delete</mat-icon></button>
+  </div>
+
+  <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div>
+</div>
