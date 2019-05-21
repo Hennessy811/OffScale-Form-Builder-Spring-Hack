@@ -11,12 +11,13 @@
   <li> <a href="#frontend">Frontend</a>
 </ol>
   <li> <a href="#installation">Installation</a>
+  <li> <a href="#sql&json">SQL&JSON</a>
   <li> <a href="#finally">Finally</a>
   <li> <a href="#team">Team</a>
 </ol>
 
 # About
-We are the **IBI SOLUTION** team and we solved the task of **creating tools for designing and creating web applications with an intuitive drag-and-drop interface**.
+We are the **IBI SOLUTIONS** team and we solved the task of **creating tools for designing and creating web applications with an intuitive drag-and-drop interface**.
 
 We present the project Startblock - web application without a server (client side)
 
@@ -87,6 +88,28 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+# SQL&JSON
+
+The source code applies converting SQL-code to JSON-format and vice versa. </br>
+It supports next JSON-format: </br>
+<code>{ 
+ "database" : "MySQL",
+ "tablename" : "testtable", 
+ "fields" : [{"name": "id", "type" : "integer", "autoinc" : 1, "nullable" : 0}],
+ "primary_key" : "id",
+ "foreign_keys" : [{"name" : "mail", "references": "mails(mail)"}]
+}</code></br>
+
+You can test it running test.html file in sql&yaml directory. </br>
+Test applies:</br>
+1. Convert MySQL-code to JSON
+2. Convert JSON to MySQL-code
+3. Save results at browser's local storage
+4. Load result from browser's local storage
+5. Delete result from browser's local storage
+6. Clean local storage
+
 
 # Finally
 
